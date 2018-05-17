@@ -1,6 +1,10 @@
+const scoreEl = document.querySelector('.score');
+// initial score
+scoreEl.innerHTML = 0;
+
 // Enemies our player must avoid 
 class Enemy {
-
+    // scoreEl.innerHTML = person.score;
     constructor(x, y, speed) {
         this.x = x;
         this.y = y;
@@ -26,6 +30,9 @@ class Enemy {
             //  resets the player to beginning
             player.x = 200;
             player.y = 400;
+            // resets score to 0 when player is killed by enemy
+            player.score = 0;
+            scoreEl.innerHTML = player.score;
         }
     }
     // Draw the enemy on the screen
@@ -48,6 +55,7 @@ class Player {
         this.y = y;
         // The image/sprite for our player
         this.sprite = 'images/char-boy.png';
+        this.score = 0;
     }
 
     update() {
@@ -57,8 +65,13 @@ class Player {
         } else if (this.x < 0) {
             this.x = 0;
         } else if (this.y < 0) {
+            // when player reaches the water
+            // player resets to bottom in the middle of the canvas
             this.y = 400;
             this.x = 200;
+            // when player reaches the top, score of 10 gets added
+            this.score = this.score + 10;
+            scoreEl.innerHTML = this.score;
         } else if (this.y > 400) {
             this.y = 400;
         }
